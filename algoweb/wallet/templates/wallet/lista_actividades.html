@@ -1,0 +1,24 @@
+{% extends "wallet/base.html" %}
+{% block title %}Actividades{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h2>Actividades Publicadas</h2>
+  </div>
+
+  <div class="card-grid">
+    {% for actividad in actividades %}
+      <div class="card">
+        <div class="emoji">📘</div>
+        <h3>{{ actividad.titulo }}</h3>
+        <p>{{ actividad.descripcion }}</p>
+        <p><strong>{{ actividad.recompensa_algos }}</strong> ALGOs</p>
+        <p><em>Por: {{ actividad.creada_por.username }}</em></p>
+      </div>
+    {% empty %}
+      <p>No hay actividades registradas.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

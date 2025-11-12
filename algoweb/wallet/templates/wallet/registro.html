@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Login - EduChain</title>
+  <title>Registro - EduChain</title>
   <style>
     body {
       background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
@@ -21,16 +21,22 @@
       padding: 25px;
       border-radius: 10px;
       box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-      width: 300px;
+      width: 320px;
       text-align: left;
     }
 
     h2 {
       text-align: center;
       color: #343aeb;
+      margin-bottom: 15px;
     }
 
-    input {
+    label {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    input, select {
       width: 100%;
       padding: 10px;
       margin: 8px 0;
@@ -47,6 +53,7 @@
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
+      margin-top: 10px;
     }
 
     button:hover {
@@ -59,27 +66,20 @@
       margin-bottom: 10px;
     }
 
-    .success {
-      color: green;
-      text-align: center;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-
-    .registro-link {
+    .login-link {
       display: block;
       text-align: center;
       margin-top: 10px;
       font-size: 14px;
     }
 
-    .registro-link a {
+    .login-link a {
       color: #1a73e8;
       text-decoration: none;
       font-weight: bold;
     }
 
-    .registro-link a:hover {
+    .login-link a:hover {
       text-decoration: underline;
     }
   </style>
@@ -87,13 +87,7 @@
 <body>
 
   <div class="card">
-    <h2>Iniciar sesión</h2>
-
-    {% if messages %}
-      {% for message in messages %}
-        <div class="success">{{ message }}</div>
-      {% endfor %}
-    {% endif %}
+    <h2>Crear cuenta</h2>
 
     {% if error %}
       <div class="error">{{ error }}</div>
@@ -107,15 +101,21 @@
       <label>Contraseña</label>
       <input type="password" name="password" placeholder="••••••••" required>
 
-      <button type="submit">Entrar</button>
+      <label>Rol</label>
+      <select name="rol" required>
+        <option value="">Selecciona un rol</option>
+        <option value="Administrador">Administrador</option>
+        <option value="Docente">Docente</option>
+        <option value="Estudiante">Estudiante</option>
+      </select>
+
+      <button type="submit">Registrarse</button>
     </form>
 
-    <div class="registro-link">
-      ¿No tienes cuenta? <a href="{% url 'registro' %}">Regístrate aquí</a>
+    <div class="login-link">
+      ¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia sesión aquí</a>
     </div>
   </div>
 
 </body>
 </html>
-
-

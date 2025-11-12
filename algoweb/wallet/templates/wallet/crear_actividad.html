@@ -1,0 +1,16 @@
+{% extends "wallet/base.html" %}
+{% block title %}Crear Actividad{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h2>Crear Nueva Actividad</h2>
+  </div>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar Actividad</button>
+  </form>
+</div>
+{% endblock %}

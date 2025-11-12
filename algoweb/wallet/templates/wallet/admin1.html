@@ -1,0 +1,119 @@
+{% extends "wallet/base.html" %}
+{% block title %}Panel Administrador{% endblock %}
+
+{% block content %}
+  <style>
+    .dashboard-container {
+      text-align: center;
+    }
+
+    .dashboard-header {
+      margin-bottom: 30px;
+    }
+
+    .dashboard-header h2 {
+      color: #007bb5;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .dashboard-header p {
+      color: #333;
+      font-size: 16px;
+    }
+
+    .card-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .card {
+      background: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+      width: 250px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .card h3 {
+      color: #007bb5;
+      margin-bottom: 10px;
+    }
+
+    .card a {
+      display: block;
+      background: #00a3e0;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      padding: 10px;
+      font-weight: bold;
+      transition: background 0.2s;
+      margin-top: 10px;
+    }
+
+    .card a:hover {
+      background: #0085ba;
+    }
+
+    .card .emoji {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+  </style>
+
+  <div class="dashboard-container">
+    <div class="dashboard-header">
+      <h2>Bienvenido, {{ user.username }} (Administrador)</h2>
+      <p>Desde este panel puedes gestionar docentes, estudiantes y actividades.</p>
+    </div>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="emoji">👩‍🏫</div>
+        <h3>Docentes</h3>
+        <a href="#">Ver Docentes</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">🎓</div>
+        <h3>Estudiantes</h3>
+        <a href="#">Ver Estudiantes</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">🧾</div>
+        <h3>Crear Actividad</h3>
+        <a href="{% url 'crear_actividad' %}">Crear Nueva</a>
+      </div>
+
+      <!-- 🆕 Nuevo botón: Enviar ALGOs a Docentes -->
+      <div class="card">
+        <div class="emoji">💰</div>
+        <h3>Enviar ALGOs a Docentes</h3>
+        <a href="{% url 'enviar_algos' %}">Ir a Transferencias</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">👛</div>
+        <h3>Mi Wallet</h3>
+        <a href="{% url 'mi_wallet' %}">Ver Mi Wallet</a>
+      </div>
+
+      <div class="card">
+        <div class="emoji">💸</div>
+        <h3>Transacciones</h3>
+        <a href="{% url 'transacciones' %}">Ver Transacciones</a>
+      </div>
+    </div>
+  </div>
+{% endblock %}

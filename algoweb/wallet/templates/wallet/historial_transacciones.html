@@ -1,0 +1,74 @@
+{% extends 'wallet/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">📜 Historial de Transacciones</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card shadow-lg p-4">
+        {% if transacciones %}
+            <div class="table-responsive">
+                <table class="table table-striped align-middle">
+                    <thead class="table-dark text-center">
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Emisor</th>
+                            <th>Receptor</th>
+                            <th>Monto (ALGOs)</th>
+                            <th>Tipo</th>
+                            <th>Estado</th>
+                            <th>TxID</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for t in transacciones %}
+                            <tr>
+                                <td>{{ t.id }}</td>
+                                <td>{{ t.fecha_creacion|date:"d/m/Y H:i" }}</td>
+                                <td>{{ t.sender|truncatechars:12 }}</td>
+                                <td>{{ t.receiver|truncatechars:12 }}</td>
+                                <td><strong>{{ t.amount|floatformat:6 }}</strong></td>
+                                <td>{{ t.tipo }}</td>
+                                <td>
+                                    {% if t.estado == 'confirmed' %}
+                                        <span class="badge bg-success">Confirmada</span>
+                                    {% elif t.estado == 'pending' %}
+                                        <span class="badge bg-warning text-dark">Pendiente</span>
+                                    {% elif t.estado == 'failed' %}
+                                        <span class="badge bg-danger">Fallida</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ t.estado }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if t.txid %}
+                                        <a href="https://testnet.explorer.perawallet.app/tx/{{ t.txid }}" 
+                                           target="_blank" class="link-primary text-decoration-none">
+                                            {{ t.txid|truncatechars:10 }}
+                                        </a>
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p class="text-center text-muted">No hay transacciones registradas todavía.</p>
+        {% endif %}
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'dashboard_admin' %}" class="btn btn-secondary">⬅ Volver al Panel</a>
+    </div>
+</div>
+{% endblock %}

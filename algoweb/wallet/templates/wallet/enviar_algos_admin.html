@@ -1,0 +1,62 @@
+{% extends 'wallet/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">💸 Enviar ALGOs a un Docente</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} text-center fw-semibold">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="card shadow-lg p-4 mx-auto" style="max-width: 600px;">
+        <form method="POST" action="{% url 'enviar_algos_admin' %}" id="sendForm">
+            {% csrf_token %}
+
+            <div class="form-group mb-3">
+                <label for="docente" class="fw-bold">👨‍🏫 Selecciona un Docente:</label>
+                <select name="docente_id" id="docente" class="form-select" required>
+                    <option value="">-- Selecciona un docente --</option>
+                    {% for docente in docentes %}
+                        <option value="{{ docente.id }}">{{ docente.username }} ({{ docente.email }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="monto" class="fw-bold">💰 Monto a enviar (ALGOs):</label>
+                <input type="number" step="0.01" min="0.1" class="form-control" id="monto" name="monto" placeholder="Ejemplo: 5.0" required>
+            </div>
+
+            <div class="alert alert-info small mt-3">
+                Esta acción transferirá ALGOs desde tu <b>wallet de Administrador</b> hacia la wallet del docente seleccionado en la TestNet de Algorand.
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success px-4" id="sendBtn">
+                    🚀 Enviar ALGOs
+                </button>
+                <a href="{% url 'dashboard_admin' %}" class="btn btn-secondary ms-2">Cancelar</a>
+            </div>
+
+            <!-- Spinner oculto hasta que se haga submit -->
+            <div id="loadingSpinner" class="text-center mt-3" style="display: none;">
+                <div class="spinner-border text-success" role="status"></div>
+                <p class="mt-2">Procesando transacción, por favor espera...</p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Pequeño script para mostrar spinner mientras se envía -->
+<script>
+document.getElementById("sendForm").addEventListener("submit", function() {
+    document.getElementById("sendBtn").disabled = true;
+    document.getElementById("loadingSpinner").style.display = "block";
+});
+</script>
+{% endblock %}
